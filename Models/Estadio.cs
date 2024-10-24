@@ -9,6 +9,12 @@ namespace Stefan_Jativa_PROGRMACION4_Taller_aplicación_web_MVC.Models
         [NotNull]
         public int id { get; set; }
 
+
+        [Required]
+        [MaxLength(200)]
+        [MinLength(5)]
+        public string Nombre { get; set; }
+
         [Required]
         [MaxLength(200)]
         [MinLength(5)]

@@ -20,11 +20,24 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
         }
 
         // GET: Jugadors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? equipoId)
         {
-            var stefan_Jativa_PROGRAMACION4_TallerMVCContext = _context.Jugador.Include(j => j.Equipo);
-            return View(await stefan_Jativa_PROGRAMACION4_TallerMVCContext.ToListAsync());
+            // Cargar jugadores y equipos
+            var jugadores = _context.Jugador.Include(j => j.Equipo).AsQueryable();
+
+            // Filtrar por equipo si se proporciona un Id
+            if (equipoId.HasValue && equipoId > 0)
+            {
+                jugadores = jugadores.Where(j => j.IdEquipo == equipoId);
+            }
+
+            // Pasar la lista de equipos al ViewBag para el dropdown
+            ViewBag.Equipos = new SelectList(await _context.Equipo.ToListAsync(), "Id", "Nombre");
+
+            return View(await jugadores.ToListAsync());
         }
+
+        // Otros métodos (Details, Create, Edit, Delete) permanecen igual...
 
         // GET: Jugadors/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -48,13 +61,11 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
         // GET: Jugadors/Create
         public IActionResult Create()
         {
-            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Ciudad");
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Nombre");
             return View();
         }
 
         // POST: Jugadors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Posicion,Edad,IdEquipo")] Jugador jugador)
@@ -65,7 +76,7 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Ciudad", jugador.IdEquipo);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Nombre", jugador.IdEquipo);
             return View(jugador);
         }
 
@@ -82,13 +93,11 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Ciudad", jugador.IdEquipo);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Nombre", jugador.IdEquipo);
             return View(jugador);
         }
 
         // POST: Jugadors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Posicion,Edad,IdEquipo")] Jugador jugador)
@@ -118,7 +127,7 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Ciudad", jugador.IdEquipo);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipo, "Id", "Nombre", jugador.IdEquipo);
             return View(jugador);
         }
 

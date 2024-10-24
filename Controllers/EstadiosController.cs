@@ -54,7 +54,7 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,Direccion,Ciudad,Capacidad")] Estadio estadio)
+        public async Task<IActionResult> Create([Bind("id,Nombre,Direccion,Ciudad,Capacidad")] Estadio estadio)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,Direccion,Ciudad,Capacidad")] Estadio estadio)
+        public async Task<IActionResult> Edit(int id, [Bind("id,Nombre,Direccion,Ciudad,Capacidad")] Estadio estadio)
         {
             if (id != estadio.id)
             {

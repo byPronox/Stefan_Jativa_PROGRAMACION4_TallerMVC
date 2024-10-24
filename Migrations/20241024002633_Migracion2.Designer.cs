@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stefan_Jativa_PROGRAMACION4_TallerMVC.Data;
 
@@ -10,9 +11,11 @@ using Stefan_Jativa_PROGRAMACION4_TallerMVC.Data;
 namespace Stefan_Jativa_PROGRAMACION4_TallerMVC.Migrations
 {
     [DbContext(typeof(Stefan_Jativa_PROGRAMACION4_TallerMVCContext))]
-    partial class Stefan_Jativa_PROGRAMACION4_TallerMVCContextModelSnapshot : ModelSnapshot
+    [Migration("20241024002633_Migracion2")]
+    partial class Migracion2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
